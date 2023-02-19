@@ -33,6 +33,10 @@ let
       inherit (gnuradio) python boost;
     };
 
+    gmplot = gnuradio.pkgs.callPackage ./gmplot {
+      inherit (gnuradio) python;
+    };
+
     shell = mkShell {
       buildInputs = [
         (gnuradio.override {
@@ -45,6 +49,9 @@ let
           ];
         })
         gnuradio.python
+        gnuradio.python.pkgs.requests
+        gnuradio.python.pkgs.simplekml
+        gmplot
       ];
     };
   };
