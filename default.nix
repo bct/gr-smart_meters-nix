@@ -46,12 +46,16 @@ let
             gr-timing_utils
             gr-fhss_utils
             gr-smart_meters
+#            soapyrtlsdr
           ];
         })
         gnuradio.python
         gnuradio.python.pkgs.requests
         gnuradio.python.pkgs.simplekml
         gmplot
+#        (soapysdr.override {
+#          extraPackages = [ soapyrtlsdr ];
+#        })
       ];
     };
   };
