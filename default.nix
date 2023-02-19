@@ -35,13 +35,16 @@ let
 
     shell = mkShell {
       buildInputs = [
-        gnuradio
+        (gnuradio.override {
+          extraPackages = [
+            gr-pdu_utils
+            gr-sandia_utils
+            gr-timing_utils
+            gr-fhss_utils
+            gr-smart_meters
+          ];
+        })
         gnuradio.python
-        gr-pdu_utils
-        gr-sandia_utils
-        gr-timing_utils
-        gr-fhss_utils
-        gr-smart_meters
       ];
     };
   };
