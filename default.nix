@@ -3,6 +3,7 @@
 
 with pkgs;
 with pkgs.lib;
+
 let
   packages = rec {
     gr-pdu_utils = gnuradio.pkgs.callPackage ./gr-pdu_utils {
@@ -33,6 +34,11 @@ let
       inherit (gnuradio) python boost;
     };
 
+    gr-fosphor = gnuradio.pkgs.callPackage ./gr-fosphor {
+      inherit gnuradio;
+      inherit (gnuradio) python boost;
+    };
+
     gmplot = gnuradio.pkgs.callPackage ./gmplot {
       inherit (gnuradio) python;
     };
@@ -46,16 +52,23 @@ let
             gr-timing_utils
             gr-fhss_utils
             gr-smart_meters
-#            soapyrtlsdr
+            gr-fosphor
+            soapyrtlsdr
+          ];
+          extraMakeWrapperArgs = [
+            "--prefix" "SOAPY_SDR_PLUGIN_PATH" ":"
+            "${
+              lib.makeSearchPath "lib/SoapySDR/modules0.8" [soapyrtlsdr]
+            }"
           ];
         })
         gnuradio.python
         gnuradio.python.pkgs.requests
         gnuradio.python.pkgs.simplekml
         gmplot
-#        (soapysdr.override {
-#          extraPackages = [ soapyrtlsdr ];
-#        })
+        (soapysdr.override {
+          extraPackages = [ soapyrtlsdr ];
+        })
       ];
     };
   };
