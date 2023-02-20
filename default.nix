@@ -56,6 +56,7 @@ let
             soapyrtlsdr
           ];
           extraMakeWrapperArgs = [
+            # make sure the soapy plugins can be found
             "--prefix" "SOAPY_SDR_PLUGIN_PATH" ":"
             "${
               lib.makeSearchPath "lib/SoapySDR/modules0.8" [soapyrtlsdr]
